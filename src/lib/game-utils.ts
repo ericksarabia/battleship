@@ -1,4 +1,4 @@
-import { GRID_SIZE, type Ship, type GameState } from "../lib/types";
+import { GRID_SIZE, type Ship, type GameState } from '../lib/types';
 
 // Initialize the game with randomly placed ships
 export function initializeGame(
@@ -21,7 +21,7 @@ export function initializeGame(
     grid,
     shotsFired: 0,
     gameOver: false,
-    message: "Enter coordinates to fire a shot!",
+    message: 'Enter coordinates to fire a shot!',
   };
 }
 
@@ -74,25 +74,19 @@ export function placeShip(ships: Ship[], size: number, type: string): void {
 }
 
 // Process a shot at the given coordinates
-export function processShot(
-  gameState: GameState,
-  row: number,
-  col: number
-): GameState {
+export function processShot(gameState: GameState, row: number, col: number): GameState {
   // Create a copy of the current game state
   const newGrid = [...gameState.grid.map((gridRow) => [...gridRow])];
   const newShips = [...gameState.ships];
-  let newMessage = "";
+  let newMessage = '';
   let isHit = false;
   let isSunk = false;
-  let shipType = "";
+  let shipType = '';
 
   // Check if the shot hits any ship
   for (let i = 0; i < newShips.length; i++) {
     const ship = newShips[i];
-    const hitIndex = ship.positions.findIndex(
-      (pos) => pos[0] === row && pos[1] === col
-    );
+    const hitIndex = ship.positions.findIndex((pos) => pos[0] === row && pos[1] === col);
 
     if (hitIndex !== -1) {
       isHit = true;
@@ -108,24 +102,22 @@ export function processShot(
   }
 
   // Update grid based on shot result
-  newGrid[row][col] = isHit ? "hit" : "miss";
+  newGrid[row][col] = isHit ? 'hit' : 'miss';
 
   // Update message based on shot result
   if (isSunk) {
     newMessage = `You sunk a ${shipType}!`;
   } else if (isHit) {
-    newMessage = "Hit!";
+    newMessage = 'Hit!';
   } else {
-    newMessage = "Miss!";
+    newMessage = 'Miss!';
   }
 
   // Check if all ships are sunk
   const allSunk = newShips.every((ship) => ship.hits === ship.size);
 
   if (allSunk) {
-    newMessage = `Game Over! You sunk all ships in ${
-      gameState.shotsFired + 1
-    } shots!`;
+    newMessage = `Game Over! You sunk all ships in ${gameState.shotsFired + 1} shots!`;
   }
 
   // Return updated game state

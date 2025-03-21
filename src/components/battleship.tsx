@@ -1,14 +1,9 @@
-import { useState, useEffect } from "react";
-import GameGrid from "./game-grid";
-import GameControls from "./game-controls";
-import GameStatus from "./game-status";
-import { type GameState, BATTLESHIP, DESTROYER } from "../lib/types";
-import {
-  initializeGame,
-  processShot,
-  validateInput,
-  parseInput,
-} from "../lib/game-utils";
+import { useState, useEffect } from 'react';
+import GameGrid from './game-grid';
+import GameControls from './game-controls';
+import GameStatus from './game-status';
+import { type GameState, BATTLESHIP, DESTROYER } from '../lib/types';
+import { initializeGame, processShot, validateInput, parseInput } from '../lib/game-utils';
 
 const Battleship = () => {
   const [gameState, setGameState] = useState<GameState>({
@@ -18,7 +13,7 @@ const Battleship = () => {
       .map(() => Array(10).fill(null)),
     shotsFired: 0,
     gameOver: false,
-    message: "Enter coordinates to fire a shot!",
+    message: 'Enter coordinates to fire a shot!',
   });
 
   // Initialize game on component mount
@@ -42,7 +37,7 @@ const Battleship = () => {
     if (!validateInput(input)) {
       setGameState({
         ...gameState,
-        message: "Invalid input!",
+        message: 'Invalid input!',
       });
       return;
     }
@@ -54,7 +49,7 @@ const Battleship = () => {
     if (gameState.grid[row][col] !== null) {
       setGameState({
         ...gameState,
-        message: "You already fired at this position!",
+        message: 'You already fired at this position!',
       });
       return;
     }

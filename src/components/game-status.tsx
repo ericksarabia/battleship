@@ -1,5 +1,5 @@
-import { FC } from "react";
-import type { GameState } from "../lib/types";
+import { FC } from 'react';
+import type { GameState } from '../lib/types';
 
 interface GameStatusProps {
   gameState: GameState;
@@ -13,13 +13,12 @@ const GameStatus: FC<GameStatusProps> = ({ gameState }) => {
           Game Status: <span className="font-normal">{gameState.message}</span>
         </p>
         <p className="font-semibold">
-          Shots Fired:{" "}
-          <span className="font-normal">{gameState.shotsFired}</span>
+          Shots Fired: <span className="font-normal">{gameState.shotsFired}</span>
         </p>
         <p className="font-semibold">
-          Ships Remaining:{" "}
+          Ships Remaining:{' '}
           <span className="font-normal">
-            {gameState.ships.filter((ship) => ship.hits < ship.size).length} /{" "}
+            {gameState.ships.filter((ship) => ship.hits < ship.size).length} /{' '}
             {gameState.ships.length}
           </span>
         </p>

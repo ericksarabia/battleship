@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { type GameState, GRID_SIZE } from "../lib/types";
+import { FC } from 'react';
+import { type GameState, GRID_SIZE } from '../lib/types';
 
 interface GameGridProps {
   gameState: GameState;
@@ -12,10 +12,7 @@ const GameGrid: FC<GameGridProps> = ({ gameState }) => {
 
     // Add column headers (A-J)
     colHeaders.push(
-      <div
-        key="empty"
-        className="w-8 h-8 flex items-center justify-center font-bold"
-      ></div>
+      <div key="empty" className="w-8 h-8 flex items-center justify-center font-bold"></div>
     );
 
     for (let i = 0; i < GRID_SIZE; i++) {
@@ -53,12 +50,12 @@ const GameGrid: FC<GameGridProps> = ({ gameState }) => {
         const cellValue = gameState.grid[i][j];
         let cellContent = null;
         let cellClass =
-          "w-8 h-8 border border-gray-300 flex items-center justify-center m-1 rounded-sm";
+          'w-8 h-8 border border-gray-300 flex items-center justify-center m-1 rounded-sm';
 
-        if (cellValue === "hit") {
+        if (cellValue === 'hit') {
           cellContent = <span className="text-red-500 font-bold">✓</span>;
           cellClass = `${cellClass} bg-red-100 border-red-500`;
-        } else if (cellValue === "miss") {
+        } else if (cellValue === 'miss') {
           cellContent = <span className="text-green-500 font-bold">✗</span>;
           cellClass = `${cellClass} bg-green-100 border-green-500`;
         }
@@ -80,9 +77,7 @@ const GameGrid: FC<GameGridProps> = ({ gameState }) => {
     return <div className="grid-container">{rows}</div>;
   };
 
-  return (
-    <div className="grid-wrapper overflow-x-auto mb-4">{renderGrid()}</div>
-  );
+  return <div className="grid-wrapper overflow-x-auto mb-4">{renderGrid()}</div>;
 };
 
 export default GameGrid;
