@@ -6,78 +6,69 @@ interface GameGridProps {
 }
 
 const GameGrid: FC<GameGridProps> = ({ gameState }) => {
-  const renderGrid = () => {
-    const rows = [];
-    const colHeaders = [];
+  // Generate column headers (A-J)
+  const columnHeaders = [
+    <div key="empty" className="w-8 h-8 flex items-center justify-center font-bold"></div>,
+    ...Array.from({ length: GRID_SIZE }, (_, i) => (
+      <div
+        key={`col-${i}`}
+        className="w-8 h-8 flex items-center justify-center font-bold mx-1 text-gray-400"
+      >
+        {String.fromCharCode(65 + i)}
+      </div>
+    )),
+  ];
 
-    // Add column headers (A-J)
-    colHeaders.push(
-      <div key="empty" className="w-8 h-8 flex items-center justify-center font-bold"></div>
-    );
-
-    for (let i = 0; i < GRID_SIZE; i++) {
-      colHeaders.push(
-        <div
-          key={`col-${i}`}
-          className="w-8 h-8 flex items-center justify-center mx-1 text-gray-400"
-        >
-          {String.fromCharCode(65 + i)}
-        </div>
-      );
-    }
-
-    rows.push(
-      <div key="col-headers" className="flex">
-        {colHeaders}
+  // Generate grid cells with row headers
+  const gridRows = Array.from({ length: GRID_SIZE }, (_, rowIndex) => {
+    // Row header (1-10)
+    const rowHeader = (
+      <div
+        key={`row-${rowIndex}`}
+        className="w-8 h-8 flex items-center justify-center font-bold my-1 text-gray-400"
+      >
+        {rowIndex + 1}
       </div>
     );
 
-    // Add rows with row headers (1-10)
-    for (let i = 0; i < GRID_SIZE; i++) {
-      const cells = [];
+    // Row cells
+    const cells = Array.from({ length: GRID_SIZE }, (_, colIndex) => {
+      const cellValue = gameState.grid[rowIndex][colIndex];
+      let cellContent = null;
+      let cellClass =
+        'w-8 h-8 border border-gray-300 flex items-center justify-center m-1 rounded-sm';
 
-      cells.push(
-        <div
-          key={`row-${i}`}
-          className="w-8 h-8 flex items-center justify-center my-1 text-gray-400"
-        >
-          {i + 1}
-        </div>
-      );
-
-      // Add cells
-      for (let j = 0; j < GRID_SIZE; j++) {
-        const cellValue = gameState.grid[i][j];
-        let cellContent = null;
-        let cellClass =
-          'w-8 h-8 border border-gray-300 flex items-center justify-center m-1 rounded-sm';
-
-        if (cellValue === 'hit') {
-          cellContent = <span className="text-red-500 font-bold">✓</span>;
-          cellClass = `${cellClass} bg-red-100 border-red-500`;
-        } else if (cellValue === 'miss') {
-          cellContent = <span className="text-green-500 font-bold">✗</span>;
-          cellClass = `${cellClass} bg-green-100 border-green-500`;
-        }
-
-        cells.push(
-          <div key={`cell-${i}-${j}`} className={cellClass}>
-            {cellContent}
-          </div>
-        );
+      if (cellValue === 'hit') {
+        cellContent = <span className="text-red-500 font-bold">✓</span>;
+        cellClass = `${cellClass} bg-red-100 border-red-500`;
+      } else if (cellValue === 'miss') {
+        cellContent = <span className="text-green-500 font-bold">✗</span>;
+        cellClass = `${cellClass} bg-green-100 border-green-500`;
       }
 
-      rows.push(
-        <div key={`row-${i}`} className="flex">
-          {cells}
+      return (
+        <div key={`cell-${rowIndex}-${colIndex}`} className={cellClass}>
+          {cellContent}
         </div>
       );
-    }
+    });
 
-    return <div className="grid-container">{rows}</div>;
-  };
+    return (
+      <div key={`row-${rowIndex}`} className="flex">
+        {rowHeader}
+        {cells}
+      </div>
+    );
+  });
 
-  return <div className="grid-wrapper overflow-x-auto mb-4">{renderGrid()}</div>;
+  return (
+    <div className="grid-wrapper overflow-x-auto mb-4">
+      <div className="grid-container">
+        <div className="flex">{columnHeaders}</div>
+        {gridRows}
+      </div>
+    </div>
+  );
 };
 
 export default GameGrid;
