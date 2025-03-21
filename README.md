@@ -27,7 +27,7 @@ A React application to allow a single human player to play a one-sided game of B
 
 ## Getting Started
 
-Clone this repository with SSH:
+Clone this repository:
 
 ```bash
 git clone https://github.com/ericksarabia/battleship.git
